@@ -10,10 +10,8 @@ def lgn_token(list_data, post_data, db, password_check_final):
 
     email_check = post_data["email"]
     password_check = post_data["password"]
-    if password_check_final is not bool(1):
-        return {'Error': 'Invalid Password !!'}
-    
-    elif email_check == list_data[0]["email"]:
+
+    if email_check == list_data[0]["email"] and password_check_final == bool(1):
         token = jwt.encode(
             {'email': email_check, 'password': password_check,
              'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30)}, JWT_SECRET_KEY)
