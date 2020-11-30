@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from package import password_encryption, validations, account_register, database, account_login, login_token, nomination_candidates, polling, tracking, admin
+from package_data import password_encryption, validations, account_register, database, account_login, login_token, nomination_candidates, polling, tracking, admin
 
 app = Flask(__name__)
 
