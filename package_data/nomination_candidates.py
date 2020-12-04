@@ -16,4 +16,5 @@ def nomination_data(id, token, db):
     elif token != list_data[0]['token']:
         return {'Error': 'invalid token'}
     else:
-        return 'you can vote for the candidate by passing a value which has given below:', {'Biden': 1, 'Trump': 2}
+        return "Hello " + list_data[0]["user_name"] + ', you can vote for the candidate by passing a value which has ' \
+                                                      'given below:', {'Biden': 1, 'Trump': 2}
