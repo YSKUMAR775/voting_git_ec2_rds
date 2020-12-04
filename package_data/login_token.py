@@ -26,6 +26,6 @@ def lgn_token(list_data, post_data, db, password_check_final):
         except Exception as err:
             return {'Error': 'InterfaceError'}
 
-        return {"id": list_data[0]["id"], "Token": token_data}
+        return {"id": list_data[0]["id"], "token": token_data}
     else:
         return {'Error': 'Invalid Password !!'}
