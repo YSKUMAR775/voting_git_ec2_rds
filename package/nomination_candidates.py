@@ -1,6 +1,6 @@
 def nomination_data(id, token, db):
     cur = db.cursor()
-    query = " select * from voting_table where id = ('" + str(id) + "') OR token = %s"
+    query = " select * from register_table where id = ('" + str(id) + "') OR token = %s"
     cur.execute(query, token)
     fetch_data = cur.fetchall()
     list_data = []
@@ -17,4 +17,4 @@ def nomination_data(id, token, db):
         return {'Error': 'invalid token'}
     else:
         return "Hello " + list_data[0]["user_name"] + ', you can vote for the candidate by passing a value which has ' \
-                                                      'given below:', {'Biden': 1, 'Trump': 2}
+                                                   'given below:', {'Biden': 1, 'Trump': 2}

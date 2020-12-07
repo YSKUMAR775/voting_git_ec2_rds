@@ -10,7 +10,7 @@ def track_data(poll, voter_id, token, db):
         return {'Error': 'please enter valid poll_number'}
 
     cur = db.cursor()
-    query = "SELECT * FROM voting_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
+    query = "SELECT * FROM register_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
     cur.execute(query)
     fetch_data = cur.fetchall()
 
@@ -30,9 +30,10 @@ def track_data(poll, voter_id, token, db):
         return {'Error': 'invalid token'}
 
     elif list_data[0]['role_name'] == "admin":
-        query = "select * from voting_candidates where candidate = ('" + str(poll) + "')"
+        query = "select * from voting_table where candidate = ('" + str(poll) + "')"
         cur.execute(query)
         fetch_data = cur.fetchall()
+        print(fetch_data)
         return {'Total number of votes for ' + poll: len(fetch_data)}
 
     else:

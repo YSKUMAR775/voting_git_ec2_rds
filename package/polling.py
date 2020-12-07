@@ -1,6 +1,3 @@
-from uuid import uuid4
-
-
 def poll_reg(voter_id, token, post_data, db):
     candidate = post_data['candidate_number']
     cur = db.cursor()
@@ -14,7 +11,7 @@ def poll_reg(voter_id, token, post_data, db):
         nomi += 'Trump'
 
     if candidate == 1 or candidate == 2:
-        query = "SELECT * FROM voting_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
+        query = "SELECT * FROM register_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
         cur.execute(query)
         fetch_data = cur.fetchall()
         list_data = []
@@ -31,9 +28,9 @@ def poll_reg(voter_id, token, post_data, db):
             return {'Error': 'invalid token'}
 
         try:
-            query = "INSERT INTO voting_candidates values('" + str(uuid4()) + "', '" + str(nomi) + "', " \
-                    "'" + str(list_data[0]['user_name']) + "' , '" + str(list_data[0]['email']) + "', " \
-                    "'" + str(list_data[0]['phone']) + "', '" + str(voter_id) + "' , '" + str(token) + "')"
+            query = "INSERT INTO voting_table values('" + str(nomi) + "', '" + str(list_data[0]['user_name']) + "' , " \
+                    "'" + str(list_data[0]['email']) + "', '" + str(list_data[0]['phone']) + "', " \
+                    "'" + str(voter_id) + "')"
             cur.execute(query)
             db.commit()
         except Exception as e:

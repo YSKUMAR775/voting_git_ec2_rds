@@ -13,8 +13,8 @@ def pass_check(post_data, list_data):
 
     if len(list_data) == 0:
         return {'Error': 'email not registered'}
-
     else:
         fetched_password = list_data[0]['password']
         password_check_final = check_password_hash(fetched_password, password)
         return password_check_final
+

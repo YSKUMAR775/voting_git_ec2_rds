@@ -3,7 +3,7 @@ def auth_lgn(post_data, db):
     # password_check = data["password"]
 
     cur = db.cursor()
-    query = "select * from voting_table where email = ('" + str(email_check) + "') "
+    query = "select * from register_table where email = ('" + str(email_check) + "') "
     cur.execute(query)
     fetch_data = cur.fetchall()
     list_data = []
