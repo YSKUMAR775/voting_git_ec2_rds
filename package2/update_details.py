@@ -1,16 +1,8 @@
 def update_data2(voter_id, token, post_data, db, valid_info, list_data):
-    # update_name = valid_info['update_user_name']
-    # update_phone = valid_info['update_phone']
-    # update_email = valid_info['update_email']
-    # cur = db.cursor()
-    # query = "SELECT * FROM register_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
-    # cur.execute(query)
-    # table_data = cur.fetchall()
-    # list_data = []
-    # for data in table_data:
-    #     dict_data = {"id": data[0], "user_name": data[1], "phone": data[2], "email": data[3],
-    #                  "password": data[4], "token": data[5], "role_name": data[6]}
-    #     list_data.append(dict_data)
+    update_name = valid_info['update_user_name']
+    update_phone = valid_info['update_phone']
+    update_email = valid_info['update_email']
+
     if len(list_data) == 0:
         return {'Error': 'invalid voter_id and token'}
     elif voter_id != list_data[0]['id']:
