@@ -66,7 +66,7 @@ def admin_login(voter_id, poll):
 
 @app.route("/data/password/voter_id=<voter_id>", methods=['POST'])
 def update_passwd(voter_id):
-    my_db = database2.db_conn()
+    my_db = database2.db_connect2()
     post_data = request.get_json()
     token = request.headers['token_data']
     list_data = account_login2.acct_lgn2(voter_id, token, my_db)
@@ -80,7 +80,7 @@ def update_passwd(voter_id):
 
 @app.route("/data/update/voter_id=<voter_id>", methods=['POST'])
 def update_detail(voter_id):
-    my_db = database2.db_conn()
+    my_db = database2.db_connect2()
     post_data = request.get_json()
     token = request.headers['token_data']
     valid_info = validations2.valid3(post_data)
