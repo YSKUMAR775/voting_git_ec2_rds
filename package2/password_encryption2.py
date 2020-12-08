@@ -12,11 +12,15 @@ def pass2_encrypt2(post_data):
         return {'Error': "RE-Enter Password correctly"}
 
 
-def pass2_check2(post_data, list_data):
+def pass2_check2(token, voter_id, post_data, list_data):
     password = post_data['old password']
 
     if len(list_data) == 0:
         return {'Error': 'email not registered'}
+    elif voter_id != list_data[0]['id']:
+        return {'Error': 'invalid voter_id'}
+    elif token != list_data[0]['token']:
+        return {'Error': 'invalid token'}
     else:
         fetched_password = list_data[0]['password']
         password_check_final = check_password_hash(fetched_password, password)

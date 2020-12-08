@@ -9,11 +9,4 @@ def acct_lgn2(voter_id, token, db):
                      "password": data[4], "token": data[5], "role_name": data[6]}
         list_data.append(dict_data)
 
-    if len(list_data) == 0:
-        return {'Error': 'invalid voter_id and token'}
-    elif voter_id != list_data[0]['id']:
-        return {'Error': 'invalid voter_id'}
-    elif token != list_data[0]['token']:
-        return {'Error': 'invalid token'}
-
     return list_data

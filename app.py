@@ -66,28 +66,29 @@ def admin_login(voter_id, poll):
 
 @app.route("/data/password/voter_id=<voter_id>", methods=['POST'])
 def update_passwd(voter_id):
-    my_db = database2.db_connect2()
+    my_db = database2.db_conn()
     post_data = request.get_json()
     token = request.headers['token_data']
     list_data = account_login2.acct_lgn2(voter_id, token, my_db)
-    password_check_final = password_encryption2.pass2_check2(post_data, list_data)
+    password_check_final = password_encryption2.pass2_check2(token, voter_id, post_data, list_data)
     encrypted_password = password_encryption2.pass2_encrypt2(post_data)
     valid_password = validations2.valid2(post_data)
-    change_password = update_password.update_password(voter_id, valid_password, post_data, my_db, password_check_final, encrypted_password)
+    change_password = update_password.update_password(voter_id, token, valid_password, post_data, my_db, password_check_final, encrypted_password)
 
     return jsonify(change_password)
 
 
 @app.route("/data/update/voter_id=<voter_id>", methods=['POST'])
 def update_detail(voter_id):
-    my_db = database2.db_connect2()
+    my_db = database2.db_conn()
     post_data = request.get_json()
     token = request.headers['token_data']
     valid_info = validations2.valid3(post_data)
-    update_info = update_details.update_data2(voter_id, token, post_data, my_db, valid_info)
+    list_data = account_login2.acct_lgn2(voter_id, token, my_db)
+    update_info = update_details.update_data2(voter_id, token, post_data, my_db, valid_info, list_data)
 
     return jsonify(update_info)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
