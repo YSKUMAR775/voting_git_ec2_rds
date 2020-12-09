@@ -1,4 +1,4 @@
-def track_data(poll, voter_id, token, db):
+def track_data(poll, voter_id, token, db, list_data):
     candidate1 = 1
     candidate2 = 2
 
@@ -8,17 +8,6 @@ def track_data(poll, voter_id, token, db):
         poll = 'Trump'
     elif candidate1 != poll or candidate2 != poll:
         return {'Error': 'please enter valid poll_number'}
-
-    cur = db.cursor()
-    query = "SELECT * FROM register_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
-    cur.execute(query)
-    fetch_data = cur.fetchall()
-
-    list_data = []
-    for data in fetch_data:
-        dict_data = {'id': data[0], 'user_name': data[1], 'phone': data[2],
-                     'email': data[3], 'password': data[4], 'token': data[5], "role_name": data[6]}
-        list_data.append(dict_data)
 
     if len(list_data) == 0:
         return {'Error': 'invalid voter_id and token'}
@@ -30,6 +19,7 @@ def track_data(poll, voter_id, token, db):
         return {'Error': 'invalid token'}
 
     elif list_data[0]['role_name'] == "admin":
+        cur = db.cursor()
         query = "select * from voting_table where candidate = ('" + str(poll) + "')"
         cur.execute(query)
         fetch_data = cur.fetchall()

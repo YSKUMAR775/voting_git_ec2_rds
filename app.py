@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from package import password_encryption, validations, account_register, database, account_login, login_token, \
-    nomination_candidates, polling, tracking, admin
-from package2 import update_password, account_login2, password_encryption2, validations2, update_details, database2
+    account_login2, nomination_candidates, polling, tracking, admin
+from package2 import update_password, account2_login2, password_encryption2, validations2, update_details, database2
 
 app = Flask(__name__)
 
@@ -28,11 +28,12 @@ def login_data():
     return jsonify(token_generate)
 
 
-@app.route("/data/voter_id=<id>", methods=['GET'])
-def check_data(id):
+@app.route("/data/voter_id=<voter_id>", methods=['GET'])
+def check_data(voter_id):
     db = database.db_connect()
     token = request.headers['token_data']
-    registered_data = nomination_candidates.nomination_data(id, token, db)
+    list_data = account_login2.acct_lgn2(token, voter_id, db)
+    registered_data = nomination_candidates.nomination_data(voter_id, token, list_data)
 
     return jsonify(registered_data)
 
@@ -42,7 +43,9 @@ def polling_register(voter_id):
     db = database.db_connect()
     token = request.headers['token_data']
     post_data = request.get_json()
-    voting_register = polling.poll_reg(voter_id, token, post_data, db)
+    list_data = account_login2.acct_lgn2(token, voter_id, db)
+    voting_register = polling.poll_reg(voter_id, token, post_data, db, list_data)
+
     return jsonify(voting_register)
 
 
@@ -50,7 +53,8 @@ def polling_register(voter_id):
 def tracking_votes(voter_id):
     db = database.db_connect()
     token = request.headers['token_data']
-    track_votes = tracking.track_data(voter_id, token, db)
+    list_data = account_login2.acct_lgn2(token, voter_id, db)
+    track_votes = tracking.track_data(voter_id, token, db, list_data)
 
     return jsonify(track_votes)
 
@@ -59,7 +63,8 @@ def tracking_votes(voter_id):
 def admin_login(voter_id, poll):
     db = database.db_connect()
     token = request.headers['token_data']
-    admin_check = admin.track_data(poll, voter_id, token, db)
+    list_data = account_login2.acct_lgn2(token, voter_id, db)
+    admin_check = admin.track_data(poll, voter_id, token, db, list_data)
 
     return jsonify(admin_check)
 
@@ -69,11 +74,11 @@ def update_passwd(voter_id):
     my_db = database2.db_conn()
     post_data = request.get_json()
     token = request.headers['token_data']
-    list_data = account_login2.acct_lgn2(voter_id, token, my_db)
+    list_data = account2_login2.acct2_lgn2(voter_id, token, my_db)
     password_check_final = password_encryption2.pass2_check2(token, voter_id, post_data, list_data)
     encrypted_password = password_encryption2.pass2_encrypt2(post_data)
     valid_password = validations2.valid2(post_data)
-    change_password = update_password.update_password(voter_id, token, valid_password, post_data, my_db, password_check_final, encrypted_password)
+    change_password = update_password.update_password(voter_id, token, valid_password, post_data, my_db, password_check_final, encrypted_password, list_data)
 
     return jsonify(change_password)
 
@@ -84,7 +89,7 @@ def update_detail(voter_id):
     post_data = request.get_json()
     token = request.headers['token_data']
     valid_info = validations2.valid3(post_data)
-    list_data = account_login2.acct_lgn2(voter_id, token, my_db)
+    list_data = account2_login2.acct2_lgn2(voter_id, token, my_db)
     update_info = update_details.update_data2(voter_id, token, post_data, my_db, valid_info, list_data)
 
     return jsonify(update_info)

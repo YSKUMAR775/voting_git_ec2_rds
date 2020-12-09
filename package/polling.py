@@ -1,4 +1,4 @@
-def poll_reg(voter_id, token, post_data, db):
+def poll_reg(voter_id, token, post_data, db, list_data):
     candidate = post_data['candidate_number']
     cur = db.cursor()
 
@@ -11,15 +11,6 @@ def poll_reg(voter_id, token, post_data, db):
         nomi += 'Trump'
 
     if candidate == 1 or candidate == 2:
-        query = "SELECT * FROM register_table where id = ('" + str(voter_id) + "') OR token = ('" + str(token) + "')"
-        cur.execute(query)
-        fetch_data = cur.fetchall()
-        list_data = []
-        for data in fetch_data:
-            dict_data = {'id': data[0], 'user_name': data[1], 'phone': data[2],
-                         'email': data[3], 'password': data[4], 'token': data[5]}
-            list_data.append(dict_data)
-
         if len(list_data) == 0:
             return {'Error': 'invalid voter_id and token'}
         elif voter_id != list_data[0]['id']:

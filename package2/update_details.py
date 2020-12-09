@@ -20,8 +20,8 @@ def update_data2(voter_id, token, post_data, db, valid_info, list_data):
                 voter_id) + "') AND token = ('" + str(token) + "')"
             cur.execute(query)
             db.commit()
-        except:
-            return {'Error': 'update_user_name or update_phone or update_email already exists'}
+        except Exception as e:
+            return {'Error': str(e).split()[1].replace('\"', '') + " " + str(e).split()[2] + " " + str(e).split()[-1].replace("'register_table.", "").replace("'", "").replace('\")', '')}
         return {'Data': 'successfully updated'}
     else:
         return {valid_info}
