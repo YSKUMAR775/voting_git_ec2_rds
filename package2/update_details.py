@@ -1,7 +1,7 @@
 def update_data2(voter_id, token, post_data, db, valid_info, list_data):
-    update_name = valid_info['update_user_name']
-    update_phone = valid_info['update_phone']
-    update_email = valid_info['update_email']
+    update_name = post_data['update_user_name']
+    update_phone = post_data['update_phone']
+    update_email = post_data['update_email']
 
     if len(list_data) == 0:
         return {'Error': 'invalid voter_id and token'}
