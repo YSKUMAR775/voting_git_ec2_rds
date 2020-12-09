@@ -24,5 +24,5 @@ def update_data2(voter_id, token, post_data, db, valid_info, list_data):
             return {'Error': str(e).split()[1].replace('\"', '') + " " + str(e).split()[2] + " " + str(e).split()[-1].replace("'register_table.", "").replace("'", "").replace('\")', '')}
         return {'Data': 'successfully updated'}
     else:
-        return {valid_info}
+        return valid_info
 
